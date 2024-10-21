@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Sister's Clothing Brand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFFFFF; /* White background */
+            color: #333; /* Dark text color */
+        }
+
+        header {
+            background-color: #F8BBD0; /* Baby pink header */
+            padding: 10 300px;
+            height: 100px; /* Adjust the height as per your preference */
+            width: 100%; /* Make header span the entire width */
+            padding-left: 100px; /* Adds padding to the left */
+            display: flex;
+            align-items: center; /* Vertically center the h1 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+            text-align: center;  
+            justify-content: space-between;
+            min-height: 40vh;
+            height: auto;
+
+
+            
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Dancing Script', cursive; 
+            font-size: 150px;
+            padding-top: 70px;
+            text-align: center;
+            bottom: 35px;
+            left: 50%;
+            margin: 25px 0 0 0; /* Margin to move it below the nav */
+            
+            
+        }
+
+        /* Navigation Links */
+nav {
+    position: absolute;
+    top: 20px; /* Move the nav links higher */
+    right: 20px; /* Move the nav links to the left */
+    transform: translateY(0); /* Ensure no vertical centering */
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    background-color: lightgray; /* Gray background */
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 10px; /* Space between links */ 
+    font-size: 20px;
+}
+
+
+        .hero {
+            background-image: url('path_to_your_image.jpg'); /* Replace with your hero image */
+            height: 300px;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 30px;
+        }
+
+        .hero h2 {
+            font-size: 2em;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text visibility */
+            padding: 30px;
+        }
+
+        
+
+        footer {
+            background-color: #D1D1D1; /* Soft gray footer */
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Style for the form container to position it correctly */
+.form-container {
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    margin-top: 20px; /* Add space below the nav */
+}
+
+form {
+    background-color: #f9f9f9; /* Light background */
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px; /* Set a width for the form */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow for styling */
+}
+
+h2 {
+    text-align: center;
+}
+
+/* Hide form by default */
+#login-form, #signup-form {
+    display: none;
+}
+
+        .categories {
+    text-align: center;
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+
+.categories h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* Category Container */
+.category-container {
+    display: flex;
+    justify-content: center; /* Aligns the items horizontally in the center */
+    gap: 50px; /* Adds space between the buttons */
+    
+}
+
+/* Category Button Styling */
+.category-button {
+    display: block;
+    background-color: lightgray; /* Gray background */
+    border-radius: 5px;
+    padding: 40px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    width: 350px;
+    transition: background-color 0.3s ease;
+}
+
+.category-button:hover {
+    background-color: #d3d3d3; /* Darken the background on hover */
+}
+
+/* Category Content Styling */
+.category-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Category Image Styling */
+.category-image {
+    width: 200px;
+    height: 300px;
+    object-fit: cover; /* Makes the image fit nicely */
+    border-radius: 50%; /* Makes the images circular */
+}
+
+/* Text Styling for the Category Button */
+.category-button span {
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Adjusts the whole section to sit lower on the page */
+.categories {
+    margin-top: 200px; /* Pushes the category section lower on the page */
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Hani's Clothing Collection</h1>
+        <nav>
+            <a href="#" onclick="toggleForm('login-form')">Login</a>
+            <a href="#" onclick="toggleForm('signup-form')">Sign Up</a>
+            <a href="https://t.me/sirbenhelen" target="_blank">Contact Us </a>
+        </nav>
+        <div class="form-container" id="login-form" style="display: none;">
+            <h2>Login</h2>
+            <form>
+                <label for="phoneNumber">phoneNumber:</label>
+                <input type="text" id="phoneNumberr" name="phoneNumber" required><br><br>
+    
+                <label for="password">Password:</label>
+                <input type="password" id="passwordd" name="password" required><br><br>
+    
+                <input type="submit" value="Login">
+            </form>
+            <p>Don't have an account? <a href="#" onclick="toggleForm('signup-form')">Sign up</a></p>
+        </div>
+    
+        <!-- Sign-Up Form -->
+        <div class="form-container" id="signup-form" style="display: none;">
+            <h2>Sign Up</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br><br>
+                <small id="nameError" class="error-message"></small>
+    
+    
+                <label for="phoneNumber">phoneNumber:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" required><br><br>
+                <small id="phoneError" class="error-message"></small>
+    
+    
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br><br>
+                <small id="passwordError" class="error-message"></small>
+    
+    
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="toggleForm('login-form')">Login</a></p>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h2>Discover Your Style and Unveil Your Unique Look</h2>
+    </div>
+
+    <section class="categories">
+        <h2>Shop by Category</h2>
+
+        <div class="category-container">
+            <!-- Category Button for Men -->
+            <a href="men.html" class="category-button">
+                <div class="category-content">
+                    <img src="images\eee.jpg.jpg" alt="Men's Clothing" class="category-image">
+                    <span>Men</span>
+                </div>
+            </a>
+            
+            <!-- Category Button for Women -->
+            <a href="women.html" class="category-button">
+                <div class="category-content">
+                    <img src="images\Dreamy Cottagcore Dresses You Will Love.jpg" alt="Women's Clothing" class="category-image">
+                    <span>Women</span>
+                </div>
+            </a>
+            
+            <!-- Category Button for Kids -->
+            <a href="kids.html" class="category-button">
+                <div class="category-content">
+                    <img src="images\ArbhTfoK.jpg" alt="Children's Clothing" class="category-image">
+                    <span>Kids</span>
+                </div>
+            </a>
+        </div>
+        
+    </section>
+
+
+    <footer>
+        <p>&copy; 2024 Hani's Clothing Brand</p>
+    </footer>
+
+
+        <!-- JavaScript to Toggle Forms -->
+        <script>
+        function toggleForm(formId) {
+            document.getElementById('login-form').style.display = (formId === 'login-form') ? 'block' : 'none';
+            document.getElementById('signup-form').style.display = (formId === 'signup-form') ? 'block' : 'none';
+        }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Your code here
+
+
+        
+        // Select the form and input fields
+        
+const form = document.getElementById('signupForm');
+
+const phoneError = document.getElementById('phoneError');
+const passwordError = document.getElementById('passwordError');
+
+// Event listener for form submission
+form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+});
+
+document.getElementById('nameError').textContent = '';
+      document.getElementById('phoneError').textContent = '';
+      document.getElementById('passwordError').textContent = '';
+      
+
+//let formIsValid = true; // Flag to track if form is valid
+
+// Validate name
+const name = document.getElementById('name').value.trim();
+      if (name === '') {
+        document.getElementById('nameError').textContent = 'Name is required.';
+        formIsValid = false; // Mark form as invalid
+      }
+      
+  
+   // Validate phone number
+   const phoneNumber = document.getElementById('phoneNumber').value.trim();
+      const phonePattern = /^[0-9]{10}$/; // Example pattern: 10 digits
+      if (!phonePattern.test(phoneNumber)) {
+        document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number.';
+        formIsValid = false; // Mark form as invalid
+      }
+
+  // Validate password
+  const password = document.getElementById('password').value;
+      if (password.length < 6) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long.';
+        formIsValid = false; // Mark form as invalid
+      }
+
+      if (formIsValid) {
+        // Proceed with form submission logic (like sending data to the server)
+        console.log('Form is valid and ready for submission');
+      }
+    ;
+});
+
+    
+        </script>
+    
+    
+    
+</body>
+</html>
