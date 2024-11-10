@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Sister's Clothing Brand</title>
+    <title>My Sister's Clothing Brand</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
     <style>
+        html {
+    scroll-behavior: smooth;
+}
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -16,41 +20,49 @@
 
         header {
             background-color: #F8BBD0; /* Baby pink header */
-            padding: 10 300px;
-            height: 100px; /* Adjust the height as per your preference */
-            width: 100%; /* Make header span the entire width */
-            padding-left: 100px; /* Adds padding to the left */
+            padding: 10px 20px;
+            position: relative;
+            width: 100%; /* Make header span the entire width */  
+          flex-direction: center;
+           flex-wrap: wrap;
             display: flex;
             align-items: center; /* Vertically center the h1 */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
-            text-align: center;  
+            text-align: center;
             justify-content: space-between;
-            min-height: 40vh;
-            height: auto;
+           height: 70%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+            
+            
+           
 
 
             
         }
 
         h1 {
-            margin: 0;
+           
             font-family: 'Dancing Script', cursive; 
-            font-size: 150px;
-            padding-top: 70px;
+            font-size: 8.5rem;
+            margin: 0;
+            flex: 1 1 100%;
+            padding-top: 10px;
             text-align: center;
-            bottom: 35px;
-            left: 50%;
-            margin: 25px 0 0 0; /* Margin to move it below the nav */
+            
+           
+
             
             
         }
 
         /* Navigation Links */
-nav {
-    position: absolute;
+nav {display: flex;
+    gap: 10px;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    order: -1;
     top: 20px; /* Move the nav links higher */
     right: 20px; /* Move the nav links to the left */
-    transform: translateY(0); /* Ensure no vertical centering */
+    transform: translateY(0); /* Ensure no vertical centering */  
 }
 
 nav a {
@@ -61,26 +73,34 @@ nav a {
     border-radius: 5px;
     margin-left: 10px; /* Space between links */ 
     font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease;
+}
+nav a:hover {
+    background-color: #d3d3d3; /* Darken on hover */
 }
 
 
         .hero {
             background-image: url('path_to_your_image.jpg'); /* Replace with your hero image */
-            height: 300px;
+            height: 50vh;
             background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             text-align: center;
             font-family: 'Dancing Script', cursive;
-            font-size: 30px;
+            font-size: 1.5rem;
         }
 
         .hero h2 {
             font-size: 2em;
             background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text visibility */
-            padding: 30px;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         
@@ -95,18 +115,47 @@ nav a {
         }
         /* Style for the form container to position it correctly */
 .form-container {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
+    width: 200px;
     justify-content: center; /* Center the form horizontally */
     margin-top: 20px; /* Add space below the nav */
+    z-index: 100;
 }
 
 form {
     background-color: #f9f9f9; /* Light background */
     padding: 20px;
-    border-radius: 8px;
-    width: 300px; /* Set a width for the form */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow for styling */
+    display: flex;
+    flex-direction: column;
+   
 }
+
+form input {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button, form input[type="submit"] {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #F8BBD0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+form button:hover, form input[type="submit"]:hover {
+    background-color: #d3a4c8;
+}
+    
 
 h2 {
     text-align: center;
@@ -117,35 +166,134 @@ h2 {
     display: none;
 }
 
-        .categories {
+
+.promo-banner {
+    width: 100%;
+    
+    height: auto;
+    background-color: gray;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+   
+    
+}
+
+
+.promo-banner p{ 
+    margin-bottom: 20px;
+}
+
+.star {
+    background: radial-gradient(circle at 50% 50%, #fff 25%, #ffda44 60%, #d4a017 100%);
+    width: 200px;
+    height: 180px;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: shine 3s infinite;
+}
+
+.star span {
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+}
+
+.promo-banner p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.shop-link {
+    color: #ffffff;
+    text-decoration: underline;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.shop-link:hover {
+    text-decoration: none;
+}
+
+@keyframes shine {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.5); }
+    100% { filter: brightness(1); }
+}
+
+.promo-banner p {
+    margin: 0;
+}
+
+.shop-link {
+    color: #ffffff;
+    text-decoration: underline;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.shop-link:hover {
+    text-decoration: none;
+}
+     .categories {
     text-align: center;
     margin-top: 50px;
-    padding-bottom: 50px;
+    padding: 50px 20px;
 }
 
 .categories h2 {
-    font-size: 28px;
+    font-size:  2rem;
     margin-bottom: 30px;
 }
 
 /* Category Container */
 .category-container {
-    display: flex;
-    justify-content: center; /* Aligns the items horizontally in the center */
-    gap: 50px; /* Adds space between the buttons */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 3 columns on top responsive colums*/
+
+    gap: 7px;
+    width: 80%;
+    flex-wrap: wrap;
+    justify-content: space;
+
     
+ 
+    margin: 0 auto; /* Use negative margins to bring items closer together */
+    padding: 0; /* Remove padding if present */
+
 }
+
 
 /* Category Button Styling */
 .category-button {
-    display: block;
+    display: flex;
     background-color: lightgray; /* Gray background */
     border-radius: 5px;
-    padding: 40px;
+    margin: 0px; /* Use negative margins to bring items closer together */
+    padding: 0; 
     text-align: center;
     text-decoration: none;
     color: black;
-    width: 350px;
+    font-size: 1rem;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+ 
+    
+    
     transition: background-color 0.3s ease;
 }
 
@@ -162,16 +310,18 @@ h2 {
 
 /* Category Image Styling */
 .category-image {
-    width: 200px;
-    height: 300px;
+    width: 100%;
+   height: 80%;
+
+    
     object-fit: cover; /* Makes the image fit nicely */
-    border-radius: 50%; /* Makes the images circular */
+    border-radius: 25%; /* Makes the images circular */
 }
 
 /* Text Styling for the Category Button */
 .category-button span {
-    margin-top: 20px;
-    font-size: 25px;
+    margin-top: 85px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -179,15 +329,242 @@ h2 {
 .categories {
     margin-top: 200px; /* Pushes the category section lower on the page */
 }
+
+.category-container .category-content {
+    margin: 20px;
+}
+
+.category-container .category-button:nth-child(1) {
+    grid-column: 1; /* First column in the top row */
+}
+
+.category-container .category-button:nth-child(2) {
+    grid-column: 3; /* Second column in the top row */
+}
+
+.category-container .category-button:nth-child(3) {
+    grid-column: 5; /* Third column in the top row */
+    margin-right: 10px;
+
+}
+
+.category-container .category-button:nth-child(4) {
+    grid-column: 2; /* Center column for the first item on the bottom row */
+}
+
+.category-container .category-button:nth-child(5) {
+    grid-column: 4; /* Right column for the second item on the bottom row */
+}
+.message-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 1000; /* Ensure it stays above other content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.message-icon:hover {
+  background-color: lightblue;
+}
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav {
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        padding-top: 10px;
+    }
+
+    .hero {
+        height: 30vh;
+    }
+
+    .hero h2 {
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+
+    .promo-banner {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .star {
+        width: 40px;
+        height: 36px;
+    }
+
+    .shop-link {
+        font-size: 1rem;
+    }
+
+    .category-container {
+    
+        gap: 10px;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+
+    }
+     .category-button {
+    padding: 15px 0; /* Reduce button padding */
+    font-size: 0.4rem; /* Slightly smaller font size */
+    width: 100%;
+    text-align: center;
+
+  }
+    .category-image {
+        border-radius: 8px;
+        width: 100%;
+        height: 60%;
+        object-fit: cover;
+    }
+
+    .message-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .message-icon img {
+        width: 60%;
+        height: 60%;
+    }
+
+    footer {
+        padding: 15px 10px;
+    }
+
+    .form-container {
+        width: 90%;
+        right: 5%;
+        top: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 70%;
+       
+       
+      
+        
+    }
+
+    nav {
+        order: -1;
+        justify-content: center;
+        margin-top: 10px;
+        font-size: 1.2rem;
+    }
+
+    h1 {
+        margin-top: 10px;
+        font-size: 1em;
+        padding-top: 10px;
+        height: 40vh;
+
+    }
+    .hero {
+        height: 25vh;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+        padding: 10px;
+    }
+
+    .promo-banner {
+        font-size: 1.2rem;
+        width: fit-content;
+        bottom: 10px;
+    }
+
+    .star {
+        width: 30px;
+        height: 27px;
+    }
+
+    .shop-link {
+        font-size: 0.9rem;
+    }
+
+    .category-container {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+       gap: 8px; 
+        padding: 8px;
+    }
+
+    .category-button {
+        padding: 10px 0;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .category-image {
+        border-radius: 5px;
+        width: 100%;
+        height: 100%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    nav a {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    form button, form input[type="submit"] {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+    .message-icon {
+        width: 40px; /* Adjust size for smaller screens */
+        height: 40px;
+        bottom: 10px; /* Bring closer to the bottom if needed */
+        right: 55px; /* Adjust position to make sure it’s visible */
+    }
+}
+
 </style>
 </head>
 <body>
+    <div>
     <header>
         <h1>Hani's Clothing Collection</h1>
         <nav>
-            <a href="#" onclick="toggleForm('login-form')">Login</a>
-            <a href="#" onclick="toggleForm('signup-form')">Sign Up</a>
-            <a href="https://t.me/sirbenhelen" target="_blank">Contact Us </a>
+            <button id="login-button">Login</button>
+            <button id="signup-button">Sign Up</button>
+            <button href="https://t.me/sirbenhelen" target="_blank">Contact Us </button>
         </nav>
         <div class="form-container" id="login-form" style="display: none;">
             <h2>Login</h2>
@@ -230,8 +607,23 @@ h2 {
 
     <div class="hero">
         <h2>Discover Your Style and Unveil Your Unique Look</h2>
+
     </div>
 
+
+    <div class="promo-banner">
+        <div class="star">
+            <span>20%</span>
+        </div>
+        <p>off your first purchase <a href="#shop-category" class="shop-link">Shop Now</a></p>
+    </div>
+</div>
+    
+    
+    <div id="shop-category">
+        <!-- Your Shop by Category content here -->
+
+    
     <section class="categories">
         <h2>Shop by Category</h2>
 
@@ -239,7 +631,7 @@ h2 {
             <!-- Category Button for Men -->
             <a href="men.html" class="category-button">
                 <div class="category-content">
-                    <img src="images\eee.jpg.jpg" alt="Men's Clothing" class="category-image">
+                    <img src="images\8aa4a1c7ce11db8bf283d9167ee2e0f1.jpg" alt="Women's Clothing" class="category-image">
                     <span>Men</span>
                 </div>
             </a>
@@ -259,10 +651,37 @@ h2 {
                     <span>Kids</span>
                 </div>
             </a>
+            <!-- category for new arrivals -->
+            <a href="newarrivals.html" class="category-button">
+                <div class="category-content">
+                    <img src="images\3282b26310c966885c58b1c586e0f73b.jpg" alt="Men's Clothing" class="category-image">
+                    <span>New Arrivals</span>
+                </div>
+            </a>
+
+            <!-- catagory for discounted cloths -->
+            <a href="onsale.html" class="category-button">
+                <div class="category-content">
+                    
+                    <img src="images\d01f2feb69f1af8ab0d2fef5ab173023.jpg" alt="Men's Clothing" class="category-image">
+                    <span>On Sale</span>
+                
+                </div>
+            </a>
+
         </div>
+    </div>
+        <div class="message-icon" onclick="openMessagePage()">
+            <img src="images\message-10-icon-487x512-0qpw0g1a.png" alt="Message Icon" />
+          </div>
+        
         
     </section>
 
+    <div class="promo-banner">
+        <p>Choose Your Favorites and Enjoy Free Delivery  Order Now!</p>
+    </div>
+    
 
     <footer>
         <p>&copy; 2024 Hani's Clothing Brand</p>
@@ -271,10 +690,33 @@ h2 {
 
         <!-- JavaScript to Toggle Forms -->
         <script>
+        // Function to show or hide forms
         function toggleForm(formId) {
-            document.getElementById('login-form').style.display = (formId === 'login-form') ? 'block' : 'none';
-            document.getElementById('signup-form').style.display = (formId === 'signup-form') ? 'block' : 'none';
+            document.getElementById(formId).style.display = 'block';
         }
+
+        // Add event listener for clicks outside the form to close it
+        document.addEventListener('click', function(event) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            
+            // Check if click is outside of login or signup forms
+            if (!loginForm.contains(event.target) && !signupForm.contains(event.target) && event.target.id !== 'login-button' && event.target.id !== 'signup-button') {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'none';
+            }
+        });
+
+        // Event listeners for login and signup buttons
+        document.getElementById('login-button').addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent this click from triggering the close event
+            toggleForm('login-form');
+        });
+        
+        document.getElementById('signup-button').addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent this click from triggering the close event
+            toggleForm('signup-form');
+        });
 
 document.addEventListener('DOMContentLoaded', (event) => {
     // Your code here
@@ -283,7 +725,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         
         // Select the form and input fields
         
-const form = document.getElementById('signupForm');
+const form = document.getElementById('signup-form');
 
 const phoneError = document.getElementById('phoneError');
 const passwordError = document.getElementById('passwordError');
@@ -291,14 +733,21 @@ const passwordError = document.getElementById('passwordError');
 // Event listener for form submission
 form.addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent the form from submitting
-});
+
+
+
+// Clear previous error messages
+        nameError.textContent = '';
+        phoneError.textContent = '';
+        passwordError.textContent = '';
+
+let formIsValid = true; // Flag to track if form is valid
 
 document.getElementById('nameError').textContent = '';
       document.getElementById('phoneError').textContent = '';
       document.getElementById('passwordError').textContent = '';
       
 
-//let formIsValid = true; // Flag to track if form is valid
 
 // Validate name
 const name = document.getElementById('name').value.trim();
@@ -329,8 +778,11 @@ const name = document.getElementById('name').value.trim();
       }
     ;
 });
+});
+function openMessagePage() {
+  window.location.href = 'message.html';
+}
 
-    
         </script>
     
     

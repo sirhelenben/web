@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Messages</title>
+    <link rel="stylesheet" href="messages.css"> <!-- Link to your CSS for message styling -->
+</head>
+<body>
+    <h1>Customer Messages</h1>
+    <div id="message-list"></div>
+
+    <script>
+        async function loadCustomerMessages() {
+            try {
+                const response = await fetch('/customer/messages'); // Adjust to your API endpoint
+                if (!response.ok) throw new Error('Failed to fetch messages');
+
+                const messages = await response.json();
+                const messageList = document.getElementById('message-list');
+                messageList.innerHTML = messages.map(msg => `
+                    <div class="message">
+                        <h3>From: ${msg.sender}</h3>
+                        <p>Message: ${msg.content}</p>
+                        <small>Sent on: ${new Date(msg.timestamp).toLocaleString()}</small>
+                        <textarea placeholder="Type your response here..." id="response-${msg.id}"></textarea>
+                        <button onclick="sendResponse('${msg.id}')">Send Response</button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function sendResponse(messageId) {
+            const responseText = document.getElementById(`response-${messageId}`).value;
+
+            if (!responseText) {
+                alert('Please enter a response before sending.');
+                return;
+            }
+
+            try {
+                const res = await fetch(`/send-response`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ messageId, response: responseText }),
+                });
+
+                if (!res.ok) throw new Error('Failed to send response');
+
+                alert('Response sent successfully!');
+                document.getElementById(`response-${messageId}`).value = ''; // Clear response field
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error sending response: ' + error.message);
+            }
+        }
+
+        // Load messages when the page loads
+        document.addEventListener('DOMContentLoaded', loadCustomerMessages);
+    </script>
+</body>
+</html>

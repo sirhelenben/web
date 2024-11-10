@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="admin.css"> <!-- Link to your CSS for admin styling -->
+    <style>
+        .order-container { margin: 20px; padding: 10px; border: 1px solid #ddd; }
+        .screenshot { max-width: 200px; display: block; margin-top: 10px; }
+        .filter-container { margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <!-- Section for password entry -->
+    <input type="password" id="admin-password" placeholder="Enter Admin Password" />
+    <button id="viewMessageButton" onclick="loadMessages()">View Messages</button>
+
+
+    <!-- Order management and filtering section -->
+    <div class="filter-container">
+        <label for="status-filter">Filter by Order Status:</label>
+        <select id="status-filter" onchange="fetchOrders()">
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="shipped">Shipped</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+
+    <!-- Display messages -->
+    <div id="message-list"></div>
+    <div id="orders"></div>
+    <div id="product-management">
+        <h2>Product Management</h2>
+     
+        <!-- Add Product Form -->
+        <form id="add-product-form">
+           <h3>Add New Product</h3>
+           <input type="text" id="productName" placeholder="Product Name" required>
+           <input type="text" id="productDescription" placeholder="Description" required>
+           <input type="number" id="productPrice" placeholder="Price" required>
+           <input type="file" id="productImage" accept="image/*" required>
+           <button type="submit">Add Product</button>
+        </form>
+     
+        <!-- Existing Products List -->
+        <div id="product-list">
+           <h3>Current Products</h3>
+           <!-- Products will be dynamically loaded here -->
+        </div>
+     </div>
+     
+    <script>
+        async function login(username, password) {
+   const response = await fetch("http://127.0.0.1:3000/api/admin/login", {
+      method: "POST",
+      headers: {
+         "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+   });
+
+   if (!response.ok) {
+      throw new Error('Login failed');
+   }
+
+   const data = await response.json();
+   localStorage.setItem("token", data.token); // Store the token in localStorage
+   alert("Login successful!");
+}
+
+// Usage Example:
+login('admin', 'admin_password');
+
+async function addProduct(productData) {
+   const token = localStorage.getItem("token");  // Get the token from localStorage
+   if (!token) {
+      alert("You must be logged in!");
+      return;
+   }
+
+   try {
+      const response = await fetch("http://127.0.0.1:3000/api/admin/products", {
+         method: "POST",
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,  // Send the token in the header
+         },
+         body: JSON.stringify(productData),
+      });
+
+      if (!response.ok) {
+         throw new Error('Failed to add product');
+      }
+
+      const result = await response.json();
+      alert("Product added successfully");
+   } catch (error) {
+      alert("Failed to add product.");
+      console.error(error);
+   }
+}
+
+        // Function to load messages with password authentication
+        async function loadMessages() {
+            console.log("loadMessages function called");
+            const password = document.getElementById('admin-password').value;
+            try {
+                const response = await fetch(`http://127.0.0.1:3000/customer/messages?password=${password}`);
+                console.log("Fetched data:", response);
+                const messageList = document.getElementById('message-list');
+                
+                
+                if (!response.ok) {
+            throw new Error("Network response was not ok: " + response.statusText);
+        }
+
+        
+
+        
+
+        const messageListDiv = document.getElementById("messageList");
+                messageList.innerHTML = ''; // Clear previous messages
+
+                const messages = await response.json();
+        console.log("Messages received:", messages);
+
+                
+             
+            messages.forEach(message => {
+                    const messageItem = document.createElement("p");
+                    messageItem.textContent = `Sender: ${message.sender}, Message: ${message.text}`;
+                    messageListDiv.appendChild(messageItem);
+            });
+        
+        }
+            catch (error) {
+                console.error('Error loading messages:', error);
+                messageList.innerHTML = '<p>Error loading messages</p>';
+            }
+        }
+       
+        
+
+        // Function to fetch and filter orders based on status
+        async function fetchOrders() {
+            const statusFilter = document.getElementById('status-filter').value;
+            try {
+                const response = await fetch(`/api/admin/orders?status=${statusFilter}`);
+                const orders = await response.json();
+                const ordersContainer = document.getElementById('orders');
+
+                ordersContainer.innerHTML = '';
+                if (orders.length === 0) {
+                    ordersContainer.innerHTML = '<p>No orders found</p>';
+                    return;
+                }
+
+                orders.forEach(order => {
+                    const orderDiv = document.createElement('div');
+                    orderDiv.classList.add('order-container');
+                    orderDiv.innerHTML = `
+                        <h3>Order ID: ${order._id}</h3>
+                        <p>Name: ${order.userName}</p>
+                        <p>Phone: ${order.userPhone}</p>
+                        <p>Order Date: ${new Date(order.orderDate).toLocaleString()}</p>
+                        <p>Status: ${order.status}</p>
+                        <h4>Cart Items:</h4>
+                        <ul>${order.cartItems.map(item => `<li>${item.name} - $${item.price}</li>`).join('')}</ul>
+                        ${order.paymentScreenshot ? `<img src="${order.paymentScreenshot}" class="screenshot" alt="Payment Screenshot">` : ''}
+                        <button onclick="updateOrderStatus('${order._id}', 'shipped')">Mark as Shipped</button>
+                        <button onclick="updateOrderStatus('${order._id}', 'completed')">Mark as Completed</button>
+                    `;
+                    ordersContainer.appendChild(orderDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                document.getElementById('orders').innerHTML = '<p>Error fetching orders</p>';
+            }
+        }
+
+        // Function to update order status
+        async function updateOrderStatus(orderId, status) {
+            try {
+                const response = await fetch(`/api/admin/orders/${orderId}/status`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status })
+                });
+
+                if (response.ok) {
+                    alert('Order status updated successfully');
+                    fetchOrders(); // Refresh the order list
+                } else {
+                    alert('Failed to update order status');
+                }
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                alert('Error updating order status');
+            }
+        }
+
+
+        document.getElementById("add-product-form").addEventListener("submit", async (e) => {
+   e.preventDefault();
+
+   const formData = new FormData();
+   formData.append("name", document.getElementById("productName").value);
+   formData.append("description", document.getElementById("productDescription").value);
+   formData.append("price", document.getElementById("productPrice").value);
+   formData.append("image", document.getElementById("productImage").files[0]);
+
+   // Send product data to the server
+   const response = await fetch("http://127.0.0.1:3000/api/admin/products", {
+      method: "POST",
+      body: formData
+   });
+
+   if (response.ok) {
+      alert("Product added successfully!");
+      loadProducts();  // Refresh product list
+   } else {
+      alert("Failed to add product.");
+   }
+});
+
+// Load existing products
+async function loadProducts() {
+   const response = await fetch("http://127.0.0.1:3000/api/admin/products");
+   const products = await response.json();
+   const productList = document.getElementById("product-list");
+
+   if (!Array.isArray(products)) {
+   console.error("Unexpected response format:", products);
+   alert("Failed to load products: Unexpected response format.");
+   return;
+}
+   // Clear existing list
+   productList.innerHTML = "";
+
+   // Display products
+   products.forEach((product) => {
+      const productItem = document.createElement("div");
+      productItem.innerHTML = `
+         <h4>${product.name}</h4>
+         <img src="${product.imageUrl}" alt="${product.name}" style="width:100px; height:auto;">
+         <p>${product.description}</p>
+         <p>Price: $${product.price}</p>
+         <button onclick="removeProduct('${product._id}')">Remove</button>
+      `;
+      productList.appendChild(productItem);
+   });
+}
+
+// Remove product function
+async function removeProduct(productId) {
+   const response = await fetch(`http://127.0.0.1:3000/api/admin/products/${productId}`, {
+      method: "DELETE"
+   });
+
+   if (response.ok) {
+      alert("Product removed successfully!");
+      loadProducts();  // Refresh product list
+   } else {
+      alert("Failed to remove product.");
+   }
+}
+
+// Initial load of products
+loadProducts();
+
+        // Load orders when the page is fully loaded
+        document.addEventListener('DOMContentLoaded', fetchOrders);
+        document.getElementById("viewMessageButton").addEventListener("click", loadMessages);
+
+
+
+    </script>
+</body>
+</html>

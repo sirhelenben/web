@@ -1,0 +1,243 @@
+/* General Styles */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+header {
+    background-color:#E6E6FA; /* Dark gray background */
+    color: white;
+    padding: 10px; /* Increased margin from the top */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center; /* Center the title */
+}
+
+/* Styling for h1 title */
+h1 {
+    font-size: 48px; /* Increase the font size */
+   
+    
+}
+
+/* Navigation Links */
+nav {
+    position: absolute;
+    top: 18px;
+    right: 10%;
+   
+    
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    background-color: #E6E6FA; /* Gray background */
+    border-radius: 5px;
+}
+.top-nav {
+    display: flex;
+    
+    gap: 1px;
+
+  
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+}
+   
+.cart-icon {
+    margin-left: 10%;
+    cursor: pointer;
+    font-size: 18px;
+
+}
+ .wishlist-icon {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10%;
+}
+
+/* h2 Styling */
+
+.clothing-section h2 {
+    background-color:  #E6E6FA;; /* Light gray background for h2 */
+    padding: 20px;
+    margin: 50px auto;
+    display: inline-block;
+    border-radius: 10px;
+    font-size: 28px;
+}
+
+
+
+
+/* Clothing Container Styles */
+.clothing-container {
+    display: flex;
+   
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Clothing Item Styles */
+.clothing-item {
+    width: 270px;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.clothing-item img {
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.clothing-item h3 {
+    margin: 10px 0;
+}
+
+.clothing-item p {
+    font-size: 18px;
+    color:#E6E6FA;;
+}
+/* Button styling */
+.clothing-item button {
+    display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            
+            color: #fff;
+            margin-right: 5px;
+    background-color: #008cba;
+}
+
+.clothing-item button:hover  {
+    background-color: #005f7a;
+}
+
+/* Message icon styling */
+.message-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.message-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.message-icon:hover {
+    background-color: lightblue;
+}
+
+/* Responsive adjustments */
+
+
+@media (max-width: 768px) {
+    .top-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .clothing-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .clothing-item {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+    .clothing-item img {
+        height: 50%; /* Reduce image size to fit smaller screens */
+    }
+
+    .message-icon {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Extra small screen styles */
+@media (max-width: 480px) {
+   
+       
+        
+       
+    
+    .top-nav .cart-icon, .top-nav .wishlist-icon {
+        font-size: 16px;
+    }
+    nav {
+       
+        display: flex;
+        gap: 10px;
+        
+        margin-left: 70px;
+        margin-bottom: 15px; /* Add space below navigation links */
+    }
+    h1 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .top-nav {
+        display: flex;
+   
+       
+        margin-top: 10px; /* Optional space above icons */
+    }
+
+    /* Adjust cart and wishlist icons for smaller screens */
+    .cart-icon, .wishlist-icon {
+        font-size: 16px;
+        margin-left: 10%;
+        align-items: center;
+    }
+    .clothing-section h2 {
+        font-size: 1.5rem; /* Adjust heading size */
+    }
+
+    .clothing-item {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .message-icon {
+        bottom: 5px;
+        right: 5px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+        

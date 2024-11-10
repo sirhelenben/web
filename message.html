@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>message</title>
+    <link  href="message.css" rel="stylesheet">
+</head>
+<body>
+    <div class="messaging-container">
+        <h1>Let’s connect and create your perfect order today!</h1>
+        <textarea placeholder="Type your message here..."></textarea>
+       
+        <button type="button" id="sendbutton" ">Send</button>
+      </div>
+
+
+      <script>
+      document.addEventListener('DOMContentLoaded', () => {
+
+
+        
+    document.getElementById('sendButton').addEventListener('click', async () => {
+        const message = document.getElementById('messageInput').value;
+
+        // Check if message input is not empty
+        if (!message) {
+            alert('Please enter a message before sending.');
+            return;
+        }
+
+        // Send the message to the server
+        try {
+            const response = await fetch('/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message, userId: 'yourUserId' }) // Replace 'yourUserId' with actual user ID if needed
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            const data = await response.json();
+            console.log(data.message); // Log success message
+            alert('Message sent successfully!');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error sending message: ' + error.message);
+        }
+    });
+  
+    
+</script>
+
+
+    
+</body>
+</html>

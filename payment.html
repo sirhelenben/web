@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Confirmation</title>
+    <style>
+        /* General Styles */
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #E6E6FA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        body {
+            color: #4B0082;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            width: 100%;
+            
+            
+            box-sizing: border-box;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Heading */
+        h1 {
+            color: #4B0082;
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        /* Order ID Text */
+        p {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        #order-id {
+            font-weight: bold;
+            color: #8A2BE2;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 2.5rem;
+            color: #4B0082;
+        }
+
+        input[type="file"] {
+            border: 1px solid #D8BFD8;
+            border-radius: 5px;
+            padding: 12px;
+            cursor: pointer;
+            font-size: 2rem;
+        }
+
+        /* Submit Button */
+        button {
+            padding: 14px;
+            font-size: 3rem;
+            color: white;
+            background-color: #4B0082;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9370DB;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+           
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            p, label {
+                font-size: 1rem;
+            }
+
+            button {
+                font-size: 1rem;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirm Your Payment</h1>
+        <p>Your Order ID: <span id="order-id"></span></p>
+        
+        <form id="payment-form">
+            <label for="paymentScreenshot">Payment Screenshot:</label>
+            <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/*"><br>
+            <button type="submit">Submit Payment</button>
+        </form>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+        document.getElementById("order-id").textContent = orderId;
+
+        document.getElementById("payment-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append("orderId", orderId);
+            formData.append("paymentScreenshot", document.getElementById("paymentScreenshot").files[0]);
+
+            fetch('http://localhost:3000/api/payments', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Payment submitted successfully!");
+                } else {
+                    alert("Error submitting payment.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>

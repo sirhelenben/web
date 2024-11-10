@@ -1,0 +1,85 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+header {
+    background-color: #333; /* Dark gray background */
+    color: white;
+    padding: 50px 0; /* Increased margin from the top */
+    position: relative;
+    text-align: center; /* Center the title */
+}
+
+/* Styling for h1 title */
+h1 {
+    font-size: 48px; /* Increase the font size */
+    margin top: 0px ;
+    
+}
+
+/* Navigation Links */
+nav {
+    position: absolute;
+    top: 50%; /* Vertically align the nav section */
+    right: 50px; /* Align to the right corner */
+    transform: translateY(-50%);
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    background-color: lightgray; /* Gray background */
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 10px; /* Space between links */
+}
+
+/* h2 Styling */
+.clothing-section h2 {
+    background-color:  lightgray;; /* Light gray background for h2 */
+    padding: 20px;
+    margin: 50px auto;
+    display: inline-block;
+    border-radius: 10px;
+    font-size: 28px;
+}
+
+/* Clothing Container Styles */
+.clothing-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Clothing Item Styles */
+.clothing-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+}
+
+.clothing-item img {
+    width: 350px;  /* Set a fixed width */
+    height: 450px; /* Set a fixed height */
+    width: 70%;           /* Make the image take up the full width of the container */
+    height: 80%
+    object-fit: cover; /* Ensures the image fills the space without distortion */
+    border-radius: 10px; /* Optional: Adds rounded corners to the image */
+    display: block;
+    margin: 0 auto;
+}
+
+.clothing-item h3 {
+    margin: 10px 0;
+}
+
+.clothing-item p {
+    font-size: 18px;
+    color: lightgray;;
+}

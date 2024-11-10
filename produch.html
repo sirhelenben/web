@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <link href="message.css" rel="stylesheet">
+</head>
+<body>
+     <div class="product">
+        <img src="419d73f6e0cbbf3d3022a2a1a8d4f47b.jpg" alt="Product Image" class="product-image" />
+        <h2>Product Name</h2>
+        <p>Cost: $XX.XX</p>
+        <button class="order-button" onclick="copyToMessage('path_to_your_image.jpg', 'Product Name', 'Cost: $XX.XX')">Order</button>
+    </div> 
+
+    <div class="messaging-container">
+        <h1>Let’s connect and create your perfect order today!</h1>
+        <textarea placeholder="Type your message here..."></textarea>
+        <button type="button" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function copyToMessage(imageSrc, productName, cost) {
+            const messageBox = document.querySelector('textarea');
+            const messageContent = `I would like to order the following item:\n\nProduct: ${productName}\nCost: ${cost}\nImage: ${imageSrc}`;
+            messageBox.value = messageContent;
+            
+            // Optional: Display the image in a small size
+            const messageContainer = document.querySelector('.messaging-container');
+            const imgTag = document.createElement('img');
+            imgTag.src = imageSrc;
+            imgTag.alt = 'Ordered Product';
+            imgTag.style.width = '100px';  // Adjust size as necessary
+            imgTag.style.height = 'auto';   // Maintain aspect ratio
+            
+            // Append the image to the messaging container
+            messageContainer.appendChild(imgTag);
+        }
+
+        function sendMessage() {
+            const message = document.querySelector('textarea').value;
+            fetch('/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

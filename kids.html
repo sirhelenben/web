@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kid's Clothing</title>
+    <link rel="stylesheet" href="styleee.css"> <style>
+      .message-icon {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 50px;
+          height: 50px;
+          background-color: white;
+          border-radius: 50%;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          z-index: 1000; /* Ensure it stays above other content */
+        }
+        
+        .message-icon img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .message-icon:hover {
+          background-color: lightblue;
+        }
+      </style>
+
+</head>
+<body>
+    <header>
+        <h1>kid's Clothing</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="men.html">Men</a>
+            <a href="women.html">Women</a>
+        </nav>
+        <div class="top-nav">
+          <div class="cart-icon" id="cart-icon">
+              <span class="icon">🛒</span> Cart (<span id="cart-count">0</span>)
+          </div>
+          <div class="wishlist-icon" id="wishlist-icon">
+              <span class="icon">❤️</span> Wishlist (<span id="wishlist-count">0</span>)
+          </div>
+      </div>
+        
+    </header>
+
+    <section class="clothing-section">
+        <h2>Our Collection for Kids</h2>
+        <div class="clothing-container">
+            <div class="clothing-item">
+                <img src="d6074b25110e19a4d3e38095b2acb854.jpg" alt="Men's Jacket">
+                <h3>overalls</h3>
+                <p>$50.00</p>
+                <button onclick="addToCart({name: 'overalls', price: '$50.00', image: 'd6074b25110e19a4d3e38095b2acb854.jpg'})">Add to Cart</button>
+                <button onclick="addToWishlist({name: 'overalls', price: '$50.00', image: 'd6074b25110e19a4d3e38095b2acb854.jpg'})"> Wishlist</button>
+                <button onclick="handleOrderClick('d6074b25110e19a4d3e38095b2acb854.jpg', '2 piece summer set, 'Cost: $50') ">Order</button>
+            </div>
+            <div class="clothing-item">
+                <img src="69b2c903dfd5df99cf35bcfb2021798f.jpg" alt="Men's T-shirt">
+                <h3>sweat set</h3>
+                <p>$20.00</p>
+                <button onclick="addToCart({name: 'sweat set', price: '$50.00', image: '69b2c903dfd5df99cf35bcfb2021798f.jpg'})">Add to Cart</button>
+                <button onclick="addToWishlist({name: 'sweat set ', price: '$50.00', image: '69b2c903dfd5df99cf35bcfb2021798f.jpg'})"> Wishlist</button>
+                <button onclick="handleOrderClick('69b2c903dfd5df99cf35bcfb2021798f.jpg', 'sweat set, 'Cost: $50')">Order</button>
+            </div>
+            <!-- Add more clothing items as needed -->
+        </div>
+    </section>
+    <div class="message-icon" onclick="openMessagePage()">
+        <img src="images\message-10-icon-487x512-0qpw0g1a.png" alt="Message Icon" />
+      </div>
+    <script>
+    
+    function openMessagePage() {
+      window.location.href = 'message.html';
+      function handleOrderClick(imagePath, productName, cost) {
+            // Store product details in local storage
+            localStorage.setItem('productImage', imagePath);
+            localStorage.setItem('productName', productName);
+            localStorage.setItem('productCost', cost); 
+            // Redirect to message.html
+            location.href = 'message.html';
+        }
+
+    }
+    // Initialize empty lists
+let cart = [];
+        let wishlist = [];
+
+        // To go to the cart page 
+        function goToCart() {
+            console.log("Cart icon clicked! Navigating to cart.html");
+            window.location.href = 'cart.html';
+        } 
+
+        function goToWishlist() {
+            console.log("Navigation to wishlist page");
+            window.location.href= 'wishlist.html';
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            updateCounts();
+        });
+
+        // Add event listener for the cart icon
+        document.getElementById('cart-icon').addEventListener('click', goToCart);
+        document.getElementById('wishlist-icon').addEventListener('click', goToWishlist);
+
+        // Save to localStorage every time an item is added
+        function saveToLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+
+        // Update counts in the top nav
+        function updateCounts() {
+            document.getElementById('cart-count').textContent = cart.length;
+            document.getElementById('wishlist-count').textContent = wishlist.length;
+        }
+
+        // Function to add items to cart
+        function addToCart(item) {
+            if (!cart.some(cartItem => cartItem.name === item.name))  {
+                cart.push(item);
+                saveToLocalStorage();
+                updateCounts();
+                console.log("Current Cart:", cart);  // Log the updated cart
+            }
+        }
+
+        // Function to add items to wishlist
+        function addToWishlist(item) {
+            if (!wishlist.includes(item)) {
+                wishlist.push(item);
+                saveToLocalStorage();
+                updateCounts();
+                console.log("Current Wishlist:", wishlist); // Log the updated wishlist
+            }
+        }
+
+        // Function to remove item
+        function removeFromCart(item) {
+            cart = cart.filter(cartItem => cartItem.item !== item);
+            saveToLocalStorage();
+            updateCounts();
+            loadCartItems();
+        }
+
+   
+
+    function copyToMessage(imageSrc, productName, cost) {
+            const messageBox = document.querySelector('textarea');
+            const messageContent = `I would like to order the following item:\n\nProduct: ${productName}\nCost: ${cost}\nImage: ${imageSrc}`;
+            messageBox.value = messageContent;
+            
+            // Optional: Display the image in a small size
+            const messageContainer = document.querySelector('.messaging-container');
+            const imgTag = document.createElement('img');
+            imgTag.src = imageSrc;
+            imgTag.alt = 'Ordered Product';
+            imgTag.style.width = '100px';  // Adjust size as necessary
+            imgTag.style.height = 'auto';   // Maintain aspect ratio
+            
+            // Append the image to the messaging container
+            messageContainer.appendChild(imgTag);
+        }
+
+       
+        
+
+        function sendMessage() {
+            const message = document.querySelector('textarea').value;
+            fetch('/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

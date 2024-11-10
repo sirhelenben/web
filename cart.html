@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .cart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .cart-item button {
+            margin-left: auto;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .cart-item button:hover {
+            background-color: #555;
+        }
+
+        .total {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        /* Styling for input fields */
+        .order-info {
+            margin: 20px 0;
+        }
+
+        .order-info input {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Cart</h1>
+        <div class="top-nav">
+            <div class="cart-icon" id="cart-icon">
+                <span class="icon">🛒</span> Cart (<span id="cart-count">0</span>)
+            </div>
+    </header>
+    <div class="cart-container" id="cart-container">
+        <!-- Cart items will be populated here -->
+    </div>
+    <div class="total" id="total-price"></div>
+
+    <!-- Add user name and phone number fields -->
+    <div class="order-info">
+        <input type="text" id="userName" placeholder="Your Name">
+        <input type="text" id="userPhone" placeholder="Your Phone Number">
+    </div>
+
+    <button onclick="placeOrder()">Place Order</button>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function loadCartItems() {
+            const cartContainer = document.getElementById('cart-container');
+            const totalPriceElement = document.getElementById('total-price');
+            cartContainer.innerHTML = ''; // Clear the container
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p>Your cart is currently empty.</p>';
+                totalPriceElement.textContent = '';
+            } else {
+                let total = 0; // Variable to calculate total price
+                cart.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('cart-item');
+                    itemDiv.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div>
+                            <h3>${item.name}</h3>
+                            <p>${item.price}</p>
+                        </div>
+                        <button onclick="removeFromCart('${item.name}')">Remove</button>
+                    `;
+                    cartContainer.appendChild(itemDiv);
+                    total += parseFloat(item.price.replace('$', '')); // Update total price
+                });
+                totalPriceElement.textContent = `Total: $${total.toFixed(2)}`; // Display total price
+            }
+        }
+        
+        function updateCounts() {
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+        
+        function removeFromCart(itemName) {
+            cart = cart.filter(item => item.name !== itemName);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCartItems(); // Reload the cart to reflect changes
+        }
+
+        // Load cart items on page load
+        document.addEventListener('DOMContentLoaded', loadCartItems);
+        updateCounts();
+
+        function placeOrder() {
+            const orderData = {
+                cartItems: cart, // cart array from local storage
+                userName: document.getElementById("userName").value,
+                userPhone: document.getElementById("userPhone").value,
+            };
+
+            fetch('http://localhost:3000/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    userName: String,
+                    userPhone: String
+                }),
+            })
+            .then(response => response.json())
+               
+            .then(data => {
+                console.log("Response JSON data:", data);
+                if (data.success) {
+                    alert("Order placed successfully! Your order ID: " + data.orderId);
+                    localStorage.removeItem('cart'); // Clear cart after placing order
+                    window.location.href = `/payment.html?orderId=${data.orderId}`; // Redirect to payment page with order ID
+                } else {
+                    alert("Error placing order. Please try again.");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>

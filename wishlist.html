@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .wishlist-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .wishlist-item{
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        .wishlist-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .wishlist-item button {
+            margin-left: auto;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .wishlist-item button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>Your Wishlist</h1>
+        <div class="top-nav">
+            <div class="cart-icon" id="cart-icon">
+                <span class="icon">🛒</span> Cart (<span id="cart-count">0</span>)
+            </div>
+            <div class="wishlist-icon" id="wishlist-icon">
+                <span class="icon">❤️</span> Wishlist (<span id="wishlist-count">0</span>)
+            </div>
+        </div>
+    </header>
+
+    <section class="wishlist-section">
+        <h2>Your Items</h2>
+        <div class="wishlist-container" id="wishlist-container">
+            <!-- Wishlist items will be populated here -->
+        </div>
+    </section>
+
+    <script>
+        // Initialize empty lists
+        let cart = [];
+        let wishlist = [];
+
+        // Load wishlist from localStorage
+        document.addEventListener("DOMContentLoaded", () => {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            updateCounts();
+            loadWishlistItems();
+        });
+
+        function updateCounts() {
+            document.getElementById('cart-count').textContent = cart.length;
+            document.getElementById('wishlist-count').textContent = wishlist.length;
+        }
+
+        function loadWishlistItems() {
+            const wishlistContainer = document.getElementById('wishlist-container');
+            wishlistContainer.innerHTML = ''; // Clear existing items
+
+            wishlist.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('wishlist-item');
+                itemDiv.innerHTML = `
+                   <img src="${item.image}" alt="${item.name}">
+                        <div>
+                            <h3>${item.name}</h3>
+                            <p>${item.price}</p>
+                        </div>
+                    <button onclick="addToCartFromWishlist(${index})">Add to Cart</button>
+                `;
+                wishlistContainer.appendChild(itemDiv);
+            });
+        }
+
+        function addToCartFromWishlist(index) {
+            const item = wishlist[index];
+            // Add item to cart
+            if (!cart.some(cartItem => cartItem.name === item.name)) {
+                cart.push(item);
+                saveToLocalStorage();
+                updateCounts();
+                console.log("Added to cart:", item);
+            }
+            else{
+                console.log("items already in cart",item)
+            }
+            // Optionally, you can remove the item from wishlist after adding to cart
+            wishlist.splice(index, 1); // Remove item from wishlist
+            saveToLocalStorage();
+            updateCounts();
+            loadWishlistItems(); // Refresh wishlist display
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+
+        // Event listener for cart icon
+        document.getElementById('cart-icon').addEventListener('click', goToCart);
+        document.getElementById('wishlist-icon').addEventListener('click', goToWishlist);
+
+        function goToCart() {
+            window.location.href = 'cart.html'; // Navigate to cart page
+        } 
+
+        function goToWishlist() {
+            console.log("Navigation to wishlist page");
+        }
+    </script>
+</body>
+</html>
