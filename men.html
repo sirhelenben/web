@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men's Clothing</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body,h1,h2,h3,p{
+            margin: 0;
+            padding: 0;
+        }
+        .message-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000; /* Ensure it stays above other content */
+        }
+
+        .message-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .message-icon:hover {
+            background-color: lightblue;
+        }
+        
+        /* Top navigation styling */
+        .top-nav {
+            display: flex;
+            
+            gap: 1px;
+        
+          
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+           
+           
+        }
+        .cart-icon {
+            margin-left: 10%;
+            cursor: pointer;
+            font-size: 18px;
+
+        }
+         .wishlist-icon {
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 10%;
+            
+        }
+        nav{
+           top: 18px;
+        }
+        
+
+/* Category section styles */
+.clothing-section {
+    padding: 20px;
+    text-align: center;
+}
+
+.clothing-container {
+    display: flex;
+    flex-wrap: wrap;
+    
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.clothing-item {
+    width: 250px;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.clothing-item img {
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+        /* Category item buttons styling */
+        .clothing-item button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        .clothing-item button:hover {
+            background-color: #555;
+        }
+        /* Small screen styles */
+@media (max-width: 768px) {
+    .top-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .clothing-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .clothing-item {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+    .clothing-item img {
+        height: 50%; /* Reduce image size to fit smaller screens */
+    }
+
+    .message-icon {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Extra small screen styles */
+@media (max-width: 480px) {
+   
+       
+        
+       
+    
+    .top-nav .cart-icon, .top-nav .wishlist-icon {
+        font-size: 16px;
+    }
+    nav {
+       right: 5%;
+        display: flex;
+        gap: 10px;
+        
+        margin-left: 70px;
+        margin-bottom: 15px; /* Add space below navigation links */
+    }
+    h1 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .top-nav {
+        display: flex;
+   
+       
+        margin-top: 10px; /* Optional space above icons */
+    }
+
+    /* Adjust cart and wishlist icons for smaller screens */
+    .cart-icon, .wishlist-icon {
+        font-size: 16px;
+        margin-left: 10%;
+        align-items: center;
+    }
+    .clothing-section h2 {
+        font-size: 1.5rem; /* Adjust heading size */
+    }
+
+    .clothing-item {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .message-icon {
+        bottom: 5px;
+        right: 5px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Men's Clothing</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="women.html">Women</a>
+            <a href="kids.html">Kids</a>
+        </nav>
+        <div class="top-nav">
+            <div class="cart-icon" id="cart-icon">
+                <span class="icon">🛒</span> Cart (<span id="cart-count">0</span>)
+            </div>
+            <div class="wishlist-icon" id="wishlist-icon">
+                <span class="icon">❤️</span> Wishlist (<span id="wishlist-count">0</span>)
+            </div>
+        </div>
+    </header>
+
+    <section class="clothing-section">
+        <h2>Our Collection for Men</h2>
+        <div class="clothing-container">
+            <div class="clothing-item">
+                <img src="images/8ff30d1c3a4f3268535475665a9545c7.jpg" alt="Men's Jacket">
+                <h3>Stylish Jacket</h3>
+                <p>$50.00</p>
+                
+                <button onclick="addToCart({name: 'Stylish Jacket', price: '$50.00', image: 'images/8ff30d1c3a4f3268535475665a9545c7.jpg'})">Add to Cart</button>
+                <button onclick="addToWishlist({name: 'Stylish Jacket ', price: '$50.00', image: 'images/8ff30d1c3a4f3268535475665a9545c7.jpg'})"> Wishlist</button>
+                <button onclick="handleOrderClick('images/8ff30d1c3a4f3268535475665a9545c7.jpg', 'helen', 'Cost: $50')">Order</button>
+            </div>
+            
+            <div class="clothing-item">
+                <img src="images/5d7c51f1b0fcb6a0f6ecfaef0a049ada.jpg" alt="Men's T-shirt">
+                <h3>Classic T-Shirt</h3>
+                <p>$20.00</p>
+                <button onclick="addToCart({name: 'Classic T-Shirt', price: '$20.00', image: 'images/5d7c51f1b0fcb6a0f6ecfaef0a049ada.jpg'})">Add to Cart</button>
+                <button onclick="addToWishlist({name: 'Classic T-Shirt', price: '$20.00', image: 'images/5d7c51f1b0fcb6a0f6ecfaef0a049ada.jpg'})"> Wishlist</button>
+                <button onclick="handleOrderClick('path_to_your_image.jpg', 'helen', 'Cost: $50')">Order</button>
+            </div>
+        </div>
+    </section>
+    
+    <div class="message-icon" onclick="openMessagePage()">
+        <img src="images/message-10-icon-487x512-0qpw0g1a.png" alt="Message Icon" />
+    </div>
+
+    <script>
+        console.log("JavaScript is loaded.");
+
+        function handleOrderClick(imagePath, productName, cost) {
+            // Store product details in local storage
+            localStorage.setItem('productImage', imagePath);
+            localStorage.setItem('productName', productName);
+            localStorage.setItem('productCost', cost); 
+            // Redirect to message.html
+            location.href = 'message.html';
+        }
+
+        function openMessagePage() {
+            window.location.href = 'message.html';
+        }
+
+        // Initialize empty lists
+        let cart = [];
+        let wishlist = [];
+
+        // To go to the cart page 
+        function goToCart() {
+            console.log("Cart icon clicked! Navigating to cart.html");
+            window.location.href = 'cart.html';
+        } 
+
+        function goToWishlist() {
+            console.log("Navigation to wishlist page");
+            window.location.href= 'wishlist.html';
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            updateCounts();
+        });
+
+        // Add event listener for the cart icon
+        document.getElementById('cart-icon').addEventListener('click', goToCart);
+        document.getElementById('wishlist-icon').addEventListener('click', goToWishlist);
+
+        // Save to localStorage every time an item is added
+        function saveToLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+
+        // Update counts in the top nav
+        function updateCounts() {
+            document.getElementById('cart-count').textContent = cart.length;
+            document.getElementById('wishlist-count').textContent = wishlist.length;
+        }
+
+        // Function to add items to cart
+        function addToCart(item) {
+            if (!cart.some(cartItem => cartItem.name === item.name))  {
+                cart.push(item);
+                saveToLocalStorage();
+                updateCounts();
+                console.log("Current Cart:", cart);  // Log the updated cart
+            }
+        }
+
+        // Function to add items to wishlist
+        function addToWishlist(item) {
+            if (!wishlist.includes(item)) {
+                wishlist.push(item);
+                saveToLocalStorage();
+                updateCounts();
+                console.log("Current Wishlist:", wishlist); // Log the updated wishlist
+            }
+        }
+
+        // Function to remove item
+        function removeFromCart(item) {
+            cart = cart.filter(cartItem => cartItem.item !== item);
+            saveToLocalStorage();
+            updateCounts();
+            loadCartItems();
+        }
+        
+    
+
+        function sendMessage() {
+            const message = document.querySelector('textarea').value;
+            fetch('/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
